@@ -1,0 +1,86 @@
+<form [formGroup]="registerForm" class="form" (submit)="handleSubmit()">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="form-title">
+        <h2 class="mat-h2">注册</h2>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="fs-large">
+      <mat-form-field class="w-100">
+        <mat-label>用户名</mat-label>
+        <mat-icon matSuffix *ngIf="!usernameControl.pending">account_box</mat-icon>
+        <i matSuffix *ngIf="usernameControl.pending" class="fa fa-spinner fa-spin"></i>
+        <input
+          matInput
+          placeholder="Username"
+          formControlName="username"
+        />
+        <mat-hint>用户名是你登录网站的依据</mat-hint>
+        <mat-error *ngIf="usernameControl.hasError('required')">
+          请填写用户名
+        </mat-error>
+        <mat-error *ngIf="usernameControl.hasError('pattern')">
+          用户名长度为6至25个字符，只能使用字母数字和下划线
+        </mat-error>
+        <mat-error *ngIf="usernameControl.hasError('notUnique')">
+          用户名已被占用
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-label>昵称</mat-label>
+        <mat-icon matSuffix>account_box</mat-icon>
+        <input
+          matInput
+          placeholder="Nickname"
+          formControlName="nickname"
+        />
+        <mat-hint>昵称将作为你在网站中的标识</mat-hint>
+        <mat-error *ngIf="nicknameControl.hasError('required')">
+          请填写昵称
+        </mat-error>
+        <mat-error *ngIf="nicknameControl.hasError('minlength') || nicknameControl.hasError('maxlength')">
+          昵称的最大长度为{{nicknameControl.getError('maxlength').requiredLength}}个字符，目前有{{ nicknameControl.getError('maxlength').actualLength }}个字符
+        </mat-error>
+        <mat-error *ngIf="nicknameControl.hasError('notUnique')">
+          昵称已被占用
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-label>密码</mat-label>
+        <mat-icon matSuffix>lock</mat-icon>
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <!-- <mat-hint>密码长度为6至25个字符，只能使用字母数字和下划线</mat-hint> -->
+        <mat-error *ngIf="passwordControl.hasError('required')">
+          请填写密码
+        </mat-error>
+        <mat-error *ngIf="passwordControl.hasError('pattern')">
+          密码长度为6至25个字符，只能使用字母数字和下划线
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-label>确认密码</mat-label>
+        <mat-icon matSuffix>lock</mat-icon>
+        <input
+          matInput
+          type="password"
+          placeholder="Confirm Password"
+          formControlName="confirm_password"
+        />
+        <mat-hint>请再次输入密码</mat-hint>
+      </mat-form-field>
+      <mat-error *ngIf="shouldShowConfirmPasswordError">
+        密码不一致
+      </mat-error>
+    </mat-card-content>
+    <mat-card-actions class="fs-large">
+      <button mat-raised-button color="primary" type="submit" class="w-100">
+        提交
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

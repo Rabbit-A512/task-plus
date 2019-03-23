@@ -1,0 +1,50 @@
+<form [formGroup]="loginForm" class="form" (submit)="handleSubmit()">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="form-title">
+        <h2 class="mat-h2">用户认证</h2>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="fs-large">
+      <mat-form-field class="w-100">
+        <mat-label>用户名</mat-label>
+        <mat-icon matSuffix>account_box</mat-icon>
+        <input
+          matInput
+          placeholder="Username"
+          formControlName="username"
+        />
+        <mat-error *ngIf="usernameControl.hasError('required')">
+          请填写用户名
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-label>密码</mat-label>
+        <mat-icon matSuffix>lock</mat-icon>
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <mat-error *ngIf="passwordControl.hasError('required')">
+          请填写密码
+        </mat-error>
+      </mat-form-field>
+      <mat-error>{{ message }}</mat-error>
+    </mat-card-content>
+    <mat-card-actions class="fs-large">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="w-100"
+      >
+        登录
+      </button>
+      <div>
+        还没有账户？<a routerLink="/auth/register">注册</a>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>

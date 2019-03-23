@@ -1,0 +1,14 @@
+
+$start-color: rgb(255, 255, 255);
+$stop-color: #d97fb2a6;
+$end-color: #5dc9fe;
+
+.container {
+  height: 100%;
+  background: linear-gradient(0, $start-color, $stop-color, $end-color);
+
+  .content {
+    padding-top: 100px;
+    font-size: xx-large;
+  }
+}

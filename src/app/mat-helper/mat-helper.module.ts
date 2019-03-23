@@ -8,13 +8,13 @@ import {
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatProgressSpinnerModule,
   MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
+  MatSnackBarModule,
   MatToolbarModule,
 } from '@angular/material';
-
-// import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -34,6 +34,8 @@ import {
     MatSelectModule,
     MatRadioModule,
     MatCardModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     LayoutModule,
@@ -50,6 +52,8 @@ import {
     MatSelectModule,
     MatRadioModule,
     MatCardModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class MatHelperModule { }
