@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { IEntityService, EntityId } from './interfaces/entity-service.interface';
 import { map, catchError } from 'rxjs/operators';
 import { handleServiceError } from './errors/app-error-handler';
+import { IResponseArray } from './interfaces/response-array.interface';
 
 export class BaseEntityService<TEntity, TCreateDto, TUpdateDto> implements IEntityService<TEntity, TCreateDto, TUpdateDto> {
   constructor(
@@ -25,17 +26,17 @@ export class BaseEntityService<TEntity, TCreateDto, TUpdateDto> implements IEnti
     );
   }
 
-  findAll(): Observable<TEntity[]> {
+  findAll() {
     const url = this.domainUrl;
     return this.http.get(url).pipe(
-      map(arr => arr as TEntity[]),
+      map(arr => arr as IResponseArray<TEntity>),
     );
   }
 
-  findManyByCondition(condition: object): Observable<TEntity[]> {
+  findManyByCondition(condition: object) {
     const url = `${this.domainUrl}/condition`;
     return this.http.post(url, condition).pipe(
-      map(arr => arr as TEntity[]),
+      map(arr => arr as IResponseArray<TEntity>),
     );
   }
 

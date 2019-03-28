@@ -1,3 +1,4 @@
+import { Unauthorized } from './../shared/errors/unauthorized';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -44,7 +45,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(AuthConstants.JWT_TOKEN_NAME);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 
   get isLoggedIn(): boolean {
@@ -60,6 +61,7 @@ export class AuthService {
     } catch (error) {
       // FIXME: remove log
       console.warn('jwt decode error: ', error);
+      throw new Unauthorized(error);
       return null;
     }
   }

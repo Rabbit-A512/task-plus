@@ -1,8 +1,6 @@
-import { AuthService } from './../../../auth/auth.service';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+
+import { AuthService } from './../../../auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -16,5 +14,9 @@ export class HomeComponent {
 
   get currentUser() {
     return this.authService.currentUser;
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

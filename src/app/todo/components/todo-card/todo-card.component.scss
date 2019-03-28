@@ -1,0 +1,16 @@
+@import '~@angular/material/theming';
+
+$primary: mat-palette($mat-indigo);
+$accent: mat-palette($mat-pink);
+
+.parent {
+  border: 1px solid mat-color($primary);
+}
+
+.child {
+  border: 1px solid mat-color($accent);
+}
+
+.card {
+  margin-bottom: 10px;
+}

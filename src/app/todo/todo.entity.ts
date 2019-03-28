@@ -21,15 +21,7 @@ export class Todo {
 
   user: User;
 
-  rootTodo: Todo;
+  parent: Todo;
 
-  subTodos: Todo[];
-
-  // =============
-  // utilities
-  // =============
-
-  get isRoot(): boolean {
-    return !this.rootTodo;
-  }
+  children: Todo[];
 }

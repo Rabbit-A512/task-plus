@@ -1,27 +1,28 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
-    [attr.role]="'navigation'"
-    [mode]="'side'"
-  >
-    <mat-toolbar>Menu</mat-toolbar>
+  <mat-sidenav #drawer class="sidenav" opened fixedInViewport="true" [attr.role]="'navigation'" [mode]="'side'">
+    <mat-toolbar>菜单</mat-toolbar>
+    <mat-divider></mat-divider>
     <mat-nav-list>
-      <a mat-list-item [routerLink]="['/change-password']">修改密码</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
+      <!-- <a mat-list-item [routerLink]="['/change-password']">修改密码</a> -->
+      <a mat-list-item [routerLink]="['/todos']"><mat-icon class="icon">done</mat-icon>待办事项</a>
+      <a mat-list-item [routerLink]="['/']"><mat-icon class="icon">work</mat-icon>工作任务</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-      >
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>Task Plus</span>
-      <span>当前用户：{{ currentUser.nickname }}</span>
+      <div class="row">
+        <div class="col">
+          <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          </button>
+        </div>
+        <div class="col">
+          <a class="navbar-button" mat-button routerLink="/">Task Plus</a>
+        </div>
+        <div class="col">
+          你好，<button class="navbar-button" mat-button [matMenuTriggerFor]="userMenu">{{ currentUser.nickname }}</button>
+        </div>
+      </div>
     </mat-toolbar>
     <!-- Add Content Here -->
     <div class="content-container">
@@ -29,3 +30,8 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<mat-menu #userMenu="matMenu">
+  <a mat-menu-item [routerLink]="['/change-password']">修改密码</a>
+  <button mat-menu-item (click)="logout()">注销</button>
+</mat-menu>

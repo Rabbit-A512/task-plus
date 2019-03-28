@@ -15,3 +15,27 @@
   top: 0;
   z-index: 1;
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.col {
+  margin-right: 10px;
+}
+
+.col:last-child {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+.navbar-button {
+  font-size: inherit;
+}

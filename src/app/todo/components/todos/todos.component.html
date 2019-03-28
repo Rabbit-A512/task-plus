@@ -1,0 +1,8 @@
+<div class="container">
+  <h2 class="mat-display-1">我的待办事项</h2>
+  <div>
+    <ng-container *ngFor="let todo of todos">
+      <app-todo-card [todo]="todo" [isParent]="true"></app-todo-card>
+    </ng-container>
+  </div>
+</div>

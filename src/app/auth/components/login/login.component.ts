@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(credentials).subscribe({
       next: success => {
         if (success) {
-          this.snackBar.open('登录成功', 'Info', { duration: 1500 });
+          this.snackBar.open('登录成功', 'OK', { duration: 1500 });
           const targetUrl = this.authService.redirectUrl ? this.authService.redirectUrl : '/';
           this.router.navigateByUrl(targetUrl);
         } else {

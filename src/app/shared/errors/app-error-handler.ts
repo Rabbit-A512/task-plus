@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class AppErrorHandler extends ErrorHandler {
 
   constructor(
-    private readonly router: Router,
+    // private readonly router: Router,
   ) {
     super();
   }
@@ -23,7 +23,7 @@ export class AppErrorHandler extends ErrorHandler {
     console.warn(error);
     if (error instanceof Unauthorized) {
       console.warn('Unauthorized, redirecting...');
-      this.router.navigate(['/auth/login']);
+      // this.router.navigate(['/auth/login']);
     }
   }
 }
