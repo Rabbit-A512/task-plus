@@ -1,5 +1,11 @@
 # TaskPlus
 
+## Todo
+
+- [ ] 创建子任务：优化组件结构、解决事件传递的问题（或者提供刷新按钮）
+- [ ] 时间控件的解决方案
+- [ ] 多人合作时的路由设计
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.
 
 ## Development server

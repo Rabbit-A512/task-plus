@@ -1,6 +1,14 @@
 <mat-card [ngClass]="containerClasses">
   <mat-card-header>
     <mat-card-title>{{ todo.title }}</mat-card-title>
+    <button
+      *ngIf="isParent"
+      mat-raised-button
+      color="primary"
+      (click)="openTodoForm()"
+    >
+      添加步骤
+    </button>
   </mat-card-header>
   <mat-card-content>
     <p>{{ todo.description }}</p>
@@ -12,18 +20,11 @@
     </ng-container>
   </mat-card-content>
   <mat-card-actions>
-    <button
-      *ngIf="isParent"
-      mat-raised-button
-      color="primary"
-      [matMenuTriggerFor]="addTodoForm"
-    >添加步骤</button>
+    <button mat-icon-button color="warn" (click)="deleteOne()">
+      <mat-icon>delete</mat-icon>
+    </button>
   </mat-card-actions>
   <mat-card-footer>
     创建时间：{{ todo.createdAt | date: 'medium' }}
   </mat-card-footer>
 </mat-card>
-
-<mat-menu #addTodoForm="matMenu">
-  <app-todo-form></app-todo-form>
-</mat-menu>

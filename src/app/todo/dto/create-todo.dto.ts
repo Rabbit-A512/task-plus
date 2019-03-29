@@ -17,4 +17,6 @@ export class CreateTodoDto {
   planToFinishAt: number;
 
   // actuallyFinishedAt: number;
+
+  parentId?: number;
 }

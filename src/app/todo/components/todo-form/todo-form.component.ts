@@ -1,5 +1,10 @@
+import { CreateTodoDto } from './../../dto/create-todo.dto';
+import { TodoService } from './../../todo.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { ISubTodoDialogData } from '../../interfaces/create-sub-todo.interface';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-todo-form',
@@ -10,21 +15,42 @@ export class TodoFormComponent implements OnInit {
   todoForm: FormGroup;
 
   constructor(
-    private readonly fb: FormBuilder,
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<TodoFormComponent>,
+    private todoService: TodoService,
+    private snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) private subTodoDialogData: ISubTodoDialogData,
   ) { }
 
   ngOnInit() {
     this.todoForm = this.fb.group({
       title: ['', [Validators.required]],
       description: [''],
-      createdAt: [(new Date()).toISOString()],
-      planToFinishAt: [''],
+      // createdAt: [(new Date()).toISOString()],
+      // planToFinishAt: [''],
     });
   }
 
   handleSubmit() {
+    if (this.todoForm.invalid) {
+      return;
+    }
     // FIXME: remove log
     console.log(this.todoForm.value);
+    const reqBody: CreateTodoDto = _.assign(this.todoForm.value, { parentId: this.subTodoDialogData.parentId })
+    // FIXME: remove log
+    console.log(reqBody);
+    this.todoService.createOne(reqBody).subscribe({
+      next: res => {
+        console.log(res);
+        this.snackBar.open('添加成功', 'OK', { duration: 1500 });
+        this.dialogRef.close();
+      },
+    });
+  }
+
+  handleCancel() {
+    this.dialogRef.close();
   }
 
   get titleControl() {
