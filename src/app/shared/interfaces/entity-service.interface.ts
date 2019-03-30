@@ -12,7 +12,7 @@ export interface IEntityService<TEntity, TCreateDto, TUpdateDto> {
 
   createOne(createDto: TCreateDto): Observable<TEntity>;
 
-  updateOneById(id: EntityId, updateDto: TUpdateDto): Observable<TEntity>;
+  updateOneById(id: EntityId, updateDto: Partial<TUpdateDto>): Observable<TEntity>;
 
   deleteOneById(id: EntityId): Observable<any>;
 }

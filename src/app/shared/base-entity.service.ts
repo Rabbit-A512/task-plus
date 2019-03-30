@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { URLConstants } from './constants';
 import { Observable } from 'rxjs';
 
@@ -26,16 +26,30 @@ export class BaseEntityService<TEntity, TCreateDto, TUpdateDto> implements IEnti
     );
   }
 
-  findAll() {
+  findAll(skip?: number, take?: number) {
     const url = this.domainUrl;
-    return this.http.get(url).pipe(
+    const isPaginated = !!skip && !!take;
+    const options = isPaginated ? {
+      params: {
+        skip: String(skip),
+        take: String(take),
+      },
+    } : {};
+    return this.http.get(url, options).pipe(
       map(arr => arr as IResponseArray<TEntity>),
     );
   }
 
-  findManyByCondition(condition: object) {
+  findManyByCondition(condition: object, skip?: number, take?: number) {
     const url = `${this.domainUrl}/condition`;
-    return this.http.post(url, condition).pipe(
+    const isPaginated = !!skip && !!take;
+    const options = isPaginated ? {
+      params: {
+        skip: String(skip),
+        take: String(take),
+      },
+    } : {};
+    return this.http.post(url, condition, options).pipe(
       map(arr => arr as IResponseArray<TEntity>),
     );
   }
@@ -48,7 +62,7 @@ export class BaseEntityService<TEntity, TCreateDto, TUpdateDto> implements IEnti
     );
   }
 
-  updateOneById(id: EntityId, updateDto: TUpdateDto): Observable<TEntity> {
+  updateOneById(id: EntityId, updateDto: Partial<TUpdateDto>): Observable<TEntity> {
     const url = `${this.domainUrl}/${id}`;
     return this.http.put(url, updateDto).pipe(
       map(v => v as TEntity),

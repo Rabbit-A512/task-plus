@@ -2,9 +2,11 @@
 
 ## Todo
 
-- [ ] 创建子任务：优化组件结构、解决事件传递的问题（或者提供刷新按钮）
+- [x] 创建子任务：优化组件结构、解决事件传递的问题（或者提供刷新按钮）
 - [ ] 时间控件的解决方案
 - [ ] 多人合作时的路由设计
+- [x] 服务基类的分页参数传递
+- [ ] 优化创建和更新Todo时的Dialog参数传递（使用对象封装多个参数）
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.
 

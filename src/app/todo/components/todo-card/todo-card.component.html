@@ -1,8 +1,7 @@
-<mat-card [ngClass]="containerClasses">
+<mat-card class="parent-card">
   <mat-card-header>
     <mat-card-title>{{ todo.title }}</mat-card-title>
     <button
-      *ngIf="isParent"
       mat-raised-button
       color="primary"
       (click)="openTodoForm()"
@@ -16,12 +15,16 @@
       步骤：
     </ng-container>
     <ng-container *ngFor="let child of todo.children">
-      <app-todo-card [todo]="child" [isParent]="false"></app-todo-card>
+      <app-sub-todo-card
+        [todo]="child"
+        (deleted)="handleSubDeleted()"
+        (updated)="handleSubUpdated()"
+      ></app-sub-todo-card>
     </ng-container>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-icon-button color="warn" (click)="deleteOne()">
-      <mat-icon>delete</mat-icon>
+    <button mat-button color="warn" (click)="deleteOne()">
+      <mat-icon>delete</mat-icon>删除
     </button>
   </mat-card-actions>
   <mat-card-footer>

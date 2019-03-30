@@ -20,8 +20,10 @@ export class Todo {
   // ============
 
   user: User;
+  userId: number;
 
   parent: Todo;
+  parentId: number;
 
   children: Todo[];
 }

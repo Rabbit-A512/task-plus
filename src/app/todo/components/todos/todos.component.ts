@@ -1,8 +1,13 @@
+import { AuthService } from './../../../auth/auth.service';
+import { TodoFormComponent } from './../todo-form/todo-form.component';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { map } from 'rxjs/operators';
 
 import { Todo } from './../../todo.entity';
 import { TodoService } from './../../todo.service';
+import { AddParentTodoFormComponent } from './../add-parent-todo-form/add-parent-todo-form.component';
+import { DrawerDialogConfig } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-todos',
@@ -13,11 +18,22 @@ export class TodosComponent implements OnInit {
   todos: Partial<Todo>[];
 
   constructor(
-    private readonly todoService: TodoService,
+    private todoService: TodoService,
+    private authService: AuthService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
-    this.todoService.findAll().pipe(
+    this.loadTodos();
+  }
+
+  loadTodos(): void {
+
+    const condition = {
+      userId: this.authService.currentUser.id,
+    };
+
+    this.todoService.findManyByCondition(condition).pipe(
       map(res => {
         res.data = res.data.filter(todo => !todo.parent);
         // FIXME: remove log
@@ -27,6 +43,27 @@ export class TodosComponent implements OnInit {
     ).subscribe({
       next: res => {
         this.todos = res.data;
+      }
+    });
+  }
+
+  handleDialogClose(shouldUpdateData: ShouldUpdateData) {
+    if (shouldUpdateData) {
+      this.loadTodos();
+    }
+  }
+
+  addParentTodo() {
+    const dialogRef: MatDialogRef<TodoFormComponent, ShouldUpdateData> = this.dialog.open(TodoFormComponent, {
+      ...DrawerDialogConfig,
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: res => {
+        if (res) {
+          this.loadTodos();
+        }
       }
     });
   }

@@ -1,8 +1,19 @@
 <div class="container">
-  <h2 class="mat-display-1">我的待办事项</h2>
+  <h2 class="mat-display-1">
+    我的待办事项
+  </h2>
+  <button mat-button color="primary" (click)="addParentTodo()">
+    新增
+  </button>
   <div>
     <ng-container *ngFor="let todo of todos">
-      <app-todo-card [todo]="todo" [isParent]="true"></app-todo-card>
+      <app-todo-card
+        [todo]="todo"
+        (addSubDialogClosed)="handleDialogClose($event)"
+        (subDeleted)="loadTodos()"
+        (subUpdated)="loadTodos()"
+        (deleted)="loadTodos()"
+      ></app-todo-card>
     </ng-container>
   </div>
 </div>
