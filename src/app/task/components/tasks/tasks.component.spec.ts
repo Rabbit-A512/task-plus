@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddParentTodoFormComponent } from './add-parent-todo-form.component';
+import { TasksComponent } from './tasks.component';
 
-describe('AddParentTodoFormComponent', () => {
-  let component: AddParentTodoFormComponent;
-  let fixture: ComponentFixture<AddParentTodoFormComponent>;
+describe('TasksComponent', () => {
+  let component: TasksComponent;
+  let fixture: ComponentFixture<TasksComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddParentTodoFormComponent ]
+      declarations: [ TasksComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddParentTodoFormComponent);
+    fixture = TestBed.createComponent(TasksComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

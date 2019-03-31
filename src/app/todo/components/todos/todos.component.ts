@@ -1,13 +1,12 @@
-import { AuthService } from './../../../auth/auth.service';
-import { TodoFormComponent } from './../todo-form/todo-form.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { map } from 'rxjs/operators';
+import { DrawerDialogConfig } from 'src/app/shared/constants';
 
+import { AuthService } from './../../../auth/auth.service';
 import { Todo } from './../../todo.entity';
 import { TodoService } from './../../todo.service';
-import { AddParentTodoFormComponent } from './../add-parent-todo-form/add-parent-todo-form.component';
-import { DrawerDialogConfig } from 'src/app/shared/constants';
+import { TodoFormComponent } from './../todo-form/todo-form.component';
 
 @Component({
   selector: 'app-todos',

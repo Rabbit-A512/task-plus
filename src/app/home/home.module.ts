@@ -1,3 +1,4 @@
+import { TaskModule } from './../task/task.module';
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
@@ -15,6 +16,7 @@ import { TodoModule } from '../todo/todo.module';
     SharedModule,
     HomeRoutingModule,
     TodoModule,
+    TaskModule,
   ],
   exports: [
     HomeComponent,
