@@ -6,6 +6,7 @@ import { IEntityService, EntityId } from './interfaces/entity-service.interface'
 import { map, catchError } from 'rxjs/operators';
 import { handleServiceError } from './errors/app-error-handler';
 import { IResponseArray } from './interfaces/response-array.interface';
+import { ISimpleQueryParams } from './interfaces/simple-query-params.interface';
 
 export class BaseEntityService<TEntity, TCreateDto, TUpdateDto> implements IEntityService<TEntity, TCreateDto, TUpdateDto> {
   constructor(
@@ -18,6 +19,15 @@ export class BaseEntityService<TEntity, TCreateDto, TUpdateDto> implements IEnti
     return `${this.rootUrl}/${this.entityNamePlural}`;
   }
 
+  static makePaginationOptions(skip?: number, take?: number): ISimpleQueryParams {
+    return !!skip && !!take ? {
+      params: {
+        skip: String(skip),
+        take: String(take),
+      },
+    } : {};
+  }
+
   findOneById(id: EntityId): Observable<TEntity> {
     const url = `${this.domainUrl}/${id}`;
     return this.http.get(url).pipe(
@@ -28,13 +38,7 @@ export class BaseEntityService<TEntity, TCreateDto, TUpdateDto> implements IEnti
 
   findAll(skip?: number, take?: number) {
     const url = this.domainUrl;
-    const isPaginated = !!skip && !!take;
-    const options = isPaginated ? {
-      params: {
-        skip: String(skip),
-        take: String(take),
-      },
-    } : {};
+    const options = BaseEntityService.makePaginationOptions(skip, take);
     return this.http.get(url, options).pipe(
       map(arr => arr as IResponseArray<TEntity>),
     );
@@ -42,13 +46,7 @@ export class BaseEntityService<TEntity, TCreateDto, TUpdateDto> implements IEnti
 
   findManyByCondition(condition: object, skip?: number, take?: number) {
     const url = `${this.domainUrl}/condition`;
-    const isPaginated = !!skip && !!take;
-    const options = isPaginated ? {
-      params: {
-        skip: String(skip),
-        take: String(take),
-      },
-    } : {};
+    const options = BaseEntityService.makePaginationOptions(skip, take);
     return this.http.post(url, condition, options).pipe(
       map(arr => arr as IResponseArray<TEntity>),
     );

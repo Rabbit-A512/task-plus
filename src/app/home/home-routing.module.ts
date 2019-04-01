@@ -14,6 +14,12 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {
+        // TODO: 仪表盘
+        path: '',
+        redirectTo: 'todos',
+        pathMatch: 'full',
+      },
+      {
         path: 'change-password',
         canActivate: [LoginGuard],
         component: ChangePasswordComponent,

@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Todo</h1>
+<div mat-dialog-content>
+  <form [formGroup]="groupForm" class="form">
+    <mat-form-field class="w-100">
+      <mat-label>名称</mat-label>
+      <mat-icon matSuffix *ngIf="!nameControl.pending">bubble_chart</mat-icon>
+      <i matSuffix *ngIf="nameControl.pending" class="fa fa-spinner fa-spin"></i>
+      <input matInput placeholder="组织名称" formControlName="name" />
+      <mat-error *ngIf="nameControl.hasError('required')">
+        请填写组织名称
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="handleSubmit()">
+    提交
+  </button>
+  <button mat-raised-button (click)="handleCancel()">
+    取消
+  </button>
+</div>

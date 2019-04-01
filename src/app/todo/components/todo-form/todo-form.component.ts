@@ -52,6 +52,7 @@ export class TodoFormComponent implements OnInit {
       todoId,
     } = this.subTodoDialogData;
 
+    // 新建时有可能需要指定parent（创建子任务的情况），但是更新时不允许更新parent
     const reqBody = this.isCreating ? _.assign(this.todoForm.value, { parentId }) : this.todoForm.value;
     const req$ = this.isCreating ? this.todoService.createOne(reqBody) : this.todoService.updateOneById(todoId, reqBody);
 
