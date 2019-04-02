@@ -3,20 +3,21 @@ import { NgModule } from '@angular/core';
 import {
   MatButtonModule,
   MatCardModule,
+  MatDialogModule,
   MatGridListModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatPaginatorModule,
   MatProgressSpinnerModule,
   MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
   MatSnackBarModule,
-  MatToolbarModule,
-  MatDialogModule,
   MatTableModule,
-  MatPaginatorModule,
+  MatTabsModule,
+  MatToolbarModule,
 } from '@angular/material';
 
 @NgModule({
@@ -42,6 +43,7 @@ import {
     MatDialogModule,
     MatTableModule,
     MatPaginatorModule,
+    MatTabsModule,
   ],
   exports: [
     LayoutModule,
@@ -63,6 +65,7 @@ import {
     MatDialogModule,
     MatTableModule,
     MatPaginatorModule,
+    MatTabsModule,
   ],
 })
 export class MatHelperModule { }

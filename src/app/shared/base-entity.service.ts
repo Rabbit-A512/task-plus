@@ -68,9 +68,10 @@ export class BaseEntityService<TEntity, TCreateDto, TUpdateDto> implements IEnti
     );
   }
 
-  deleteOneById(id: EntityId): Observable<any> {
+  deleteOneById(id: EntityId): Observable<TEntity> {
     const url = `${this.domainUrl}/${id}`;
     return this.http.delete(url).pipe(
+      map(v => v as TEntity),
       catchError(handleServiceError),
     );
   }

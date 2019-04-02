@@ -5,15 +5,15 @@ export class Todo {
 
   title: string;
 
-  description: string;
+  description?: string;
 
   isFinished: boolean;
 
   createdAt: string;
 
-  planToFinishAt: string;
+  planToFinishAt?: string;
 
-  actuallyFinishedAt: string;
+  actuallyFinishedAt?: string;
 
   // ============
   // relations
@@ -22,8 +22,8 @@ export class Todo {
   user: User;
   userId: number;
 
-  parent: Todo;
-  parentId: number;
+  parent?: Todo;
+  parentId?: number;
 
   children: Todo[];
 }

@@ -6,6 +6,7 @@ import { TasksComponent } from '../task/components/tasks/tasks.component';
 import { TodosComponent } from '../todo/components/todos/todos.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { HomeComponent } from './components/home/home.component';
+import { GroupsComponent } from '../group/components/groups/groups.component';
 
 const routes: Routes = [
   {
@@ -30,9 +31,14 @@ const routes: Routes = [
         component: TodosComponent,
       },
       {
-        path: 'tasks',
+        path: 'groups',
         canActivate: [LoginGuard],
-        component: TasksComponent
+        component: GroupsComponent,
+      },
+      {
+        path: 'tasks',
+        canActivateChild: [LoginGuard],
+        component: TasksComponent,
       }
     ],
   },
