@@ -3,6 +3,29 @@
 $accent: mat-palette($mat-pink);
 
 .child-card {
-  border: 1px solid mat-color($accent);
+  // border: 1px solid mat-color($accent);
   margin-bottom: 10px;
+  background: mat-color($accent, 0.1);
+
+  .title {
+    font-size: x-large;
+  }
+
+  .description {
+    font-size: large;
+  }
+
+  .todo-footer {
+    padding-left: 15px;
+    padding-bottom: 15px;
+  }
+
 }
+
+
+.row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+

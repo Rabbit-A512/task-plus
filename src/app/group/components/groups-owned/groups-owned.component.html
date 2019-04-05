@@ -1,6 +1,3 @@
-<mat-toolbar>
-  <button mat-button color="primary" (click)="handleCreateGroup()">创建组织</button>
-</mat-toolbar>
 <table mat-table [dataSource]="ownGroups" class="mat-elevation-z2">
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>组织名称</th>
@@ -32,3 +29,7 @@
   <tr mat-header-row *matHeaderRowDef="ownGroupsColumnsToDisplay"></tr>
   <tr mat-row *matRowDef="let row; columns: ownGroupsColumnsToDisplay"></tr>
 </table>
+
+<mat-toolbar>
+  <button mat-button color="primary" (click)="handleCreateGroup()">创建组织</button>
+</mat-toolbar>

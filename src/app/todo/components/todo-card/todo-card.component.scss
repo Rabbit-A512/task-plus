@@ -5,5 +5,19 @@ $primary: mat-palette($mat-indigo);
 
 .parent-card {
   margin-bottom: 10px;
-  border: 1px solid mat-color($primary);
+  // border: 1px solid mat-color($primary);
+  background: mat-color($primary, 0.1);
+
+  .title {
+    font-size: xx-large;
+  }
+
+  .description {
+    font-size: large;
+  }
+
+  .todo-footer {
+    padding-left: 15px;
+    padding-bottom: 15px;
+  }
 }

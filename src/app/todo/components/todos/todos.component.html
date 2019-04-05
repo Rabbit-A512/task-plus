@@ -11,7 +11,8 @@
       (addSubDialogClosed)="handleDialogClose($event)"
       (subDeleted)="loadTodos()"
       (subUpdated)="loadTodos()"
-      (deleted)="loadTodos()"
+      (parentDeleted)="loadTodos()"
+      (parentUpdated)="loadTodos()"
     ></app-todo-card>
   </ng-container>
 </div>

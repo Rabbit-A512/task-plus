@@ -4,6 +4,7 @@ import { GroupsComponent } from './components/groups/groups.component';
 import { GroupFormComponent } from './components/group-form/group-form.component';
 import { GroupsParticipatedComponent } from './components/groups-participated/groups-participated.component';
 import { GroupsOwnedComponent } from './components/groups-owned/groups-owned.component';
+import { ChooseDefaultGroupComponent } from './components/choose-default-group/choose-default-group.component';
 
 @NgModule({
   declarations: [
@@ -11,12 +12,14 @@ import { GroupsOwnedComponent } from './components/groups-owned/groups-owned.com
     GroupFormComponent,
     GroupsParticipatedComponent,
     GroupsOwnedComponent,
+    ChooseDefaultGroupComponent,
   ],
   imports: [
     SharedModule,
   ],
   exports: [
     GroupsComponent,
+    ChooseDefaultGroupComponent,
   ],
   entryComponents: [
     GroupFormComponent,

@@ -8,13 +8,13 @@ export class CreateTodoDto {
 
   title: string;
 
-  description: string;
+  description?: string;
 
   // isFinished: boolean;
 
   createdAt: string;
 
-  planToFinishAt: number;
+  planToFinishAt?: number;
 
   // actuallyFinishedAt: number;
 

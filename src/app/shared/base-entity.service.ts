@@ -10,9 +10,9 @@ import { ISimpleQueryParams } from './interfaces/simple-query-params.interface';
 
 export class BaseEntityService<TEntity, TCreateDto, TUpdateDto> implements IEntityService<TEntity, TCreateDto, TUpdateDto> {
   constructor(
-    public readonly http: HttpClient,
-    public readonly entityNamePlural: string,
-    public readonly rootUrl: string = URLConstants.ROOT,
+    protected readonly http: HttpClient,
+    protected readonly entityNamePlural: string,
+    protected readonly rootUrl: string = URLConstants.ROOT,
   ) {}
 
   get domainUrl() {

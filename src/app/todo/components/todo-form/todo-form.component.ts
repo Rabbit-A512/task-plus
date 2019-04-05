@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 
 import { ITodoDialogData } from '../../interfaces/todo-dialog-data.interface';
 import { TodoService } from './../../todo.service';
+import { Todo } from '../../todo.entity';
 
 @Component({
   selector: 'app-todo-form',
@@ -21,18 +22,18 @@ export class TodoFormComponent implements OnInit {
     private dialogRef: MatDialogRef<TodoFormComponent, ShouldUpdateData>,
     private todoService: TodoService,
     private snackBar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) private subTodoDialogData: ITodoDialogData,
+    @Inject(MAT_DIALOG_DATA) private todoDialogData: Partial<Todo>,
   ) { }
 
   ngOnInit() {
     const {
       title,
       description,
-      todoId,
+      id,
       // parentId,
-    } = this.subTodoDialogData;
+    } = this.todoDialogData;
 
-    this._isCreating = !todoId;
+    this._isCreating = !id;
 
     this.todoForm = this.fb.group({
       title: [title || '', [Validators.required]],
@@ -49,12 +50,12 @@ export class TodoFormComponent implements OnInit {
 
     const {
       parentId,
-      todoId,
-    } = this.subTodoDialogData;
+      id,
+    } = this.todoDialogData;
 
     // 新建时有可能需要指定parent（创建子任务的情况），但是更新时不允许更新parent
     const reqBody = this.isCreating ? _.assign(this.todoForm.value, { parentId }) : this.todoForm.value;
-    const req$ = this.isCreating ? this.todoService.createOne(reqBody) : this.todoService.updateOneById(todoId, reqBody);
+    const req$ = this.isCreating ? this.todoService.createOne(reqBody) : this.todoService.updateOneById(id, reqBody);
 
     req$.subscribe({
       next: res => {
@@ -67,6 +68,7 @@ export class TodoFormComponent implements OnInit {
   }
 
   handleCancel() {
+    // `false` indicates that the parent component should not update data
     this.dialogRef.close(false);
   }
 

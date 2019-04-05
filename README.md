@@ -8,6 +8,8 @@
 - [x] 服务基类的分页参数传递
 - [ ] 优化创建和更新Todo时的Dialog参数传递（使用对象封装多个参数）
 - [ ] 能够完成待办事项和任务
+- [ ] 能够调整任务的优先级
+- [ ] 写一个保存当前所选组织的服务
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.
 

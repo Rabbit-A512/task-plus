@@ -1,3 +1,4 @@
+import { HasCurrentGroupGuard } from './../task/guards/has-current-group.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -37,7 +38,7 @@ const routes: Routes = [
       },
       {
         path: 'tasks',
-        canActivateChild: [LoginGuard],
+        canActivate: [LoginGuard, HasCurrentGroupGuard],
         component: TasksComponent,
       }
     ],

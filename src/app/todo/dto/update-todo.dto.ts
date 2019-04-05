@@ -5,15 +5,15 @@
  */
 export class UpdateTodoDto {
 
-  title: string;
+  title?: string;
 
-  description: string;
+  description?: string;
 
-  isFinished: boolean;
+  isFinished?: boolean;
 
   // createdAt: nunber;
 
-  planToFinishAt: number;
+  planToFinishAt?: number;
 
-  actuallyFinishedAt: number;
+  actuallyFinishedAt?: number;
 }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatCheckboxChange, MatDialog, MatDialogRef } from '@angular/material';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import {
@@ -19,10 +19,11 @@ import { TodoFormComponent } from '../todo-form/todo-form.component';
 export class TodoCardComponent implements OnInit {
   @Input() todo: Todo;
 
-  @Output() addSubDialogClosed = new EventEmitter<ShouldUpdateData>();
-  @Output() subDeleted = new EventEmitter<any>();
-  @Output() subUpdated = new EventEmitter<any>();
-  @Output() deleted = new EventEmitter<any>();
+  @Output() subCreated = new EventEmitter<ShouldUpdateData>();
+  @Output() subDeleted = new EventEmitter();
+  @Output() subUpdated = new EventEmitter();
+  @Output() parentDeleted = new EventEmitter();
+  @Output() parentUpdated = new EventEmitter();
 
   constructor(
     private dialog: MatDialog,
@@ -32,7 +33,7 @@ export class TodoCardComponent implements OnInit {
   ngOnInit() {
   }
 
-  openTodoForm(): void {
+  createSubTodo(): void {
     const dialogRef: MatDialogRef<TodoFormComponent, ShouldUpdateData> = this.dialog.open(TodoFormComponent, {
       ...DrawerDialogConfig,
       data: { parentId: this.todo.id }
@@ -40,7 +41,7 @@ export class TodoCardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe({
       next: (res: ShouldUpdateData) => {
-        this.addSubDialogClosed.emit(res);
+        this.subCreated.emit(res);
       },
     });
   }
@@ -54,8 +55,23 @@ export class TodoCardComponent implements OnInit {
       // FIXME: remove log
       console.log(res);
       if (res !== null) {
-        this.deleted.emit();
+        this.parentDeleted.emit();
       }
+    });
+  }
+
+  updateOne(): void {
+    const dialogRef: MatDialogRef<TodoFormComponent, ShouldUpdateData> = this.dialog.open(TodoFormComponent, {
+      ...DrawerDialogConfig,
+      data: this.todo,
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (shouldUpdate: ShouldUpdateData) => {
+        if (shouldUpdate) {
+          this.parentUpdated.emit(shouldUpdate);
+        }
+      },
     });
   }
 
@@ -65,6 +81,15 @@ export class TodoCardComponent implements OnInit {
 
   handleSubUpdated(): void {
     this.subUpdated.emit();
+  }
+
+  handleFinishStatusChange(event: MatCheckboxChange) {
+    const { id } = this.todo;
+    this.todoService.updateOneById(id, { isFinished: event.checked }).subscribe({
+      next: res => {
+        this.parentUpdated.emit();
+      },
+    });
   }
 
 }

@@ -22,6 +22,8 @@ export class Task {
 
   actuallyFinishedAt?: string;
 
+  priority: number;
+
   // ============
   // relations
   // ============

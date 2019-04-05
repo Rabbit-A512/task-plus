@@ -18,6 +18,8 @@ import {
   MatTableModule,
   MatTabsModule,
   MatToolbarModule,
+  MatExpansionModule,
+  MatCheckboxModule,
 } from '@angular/material';
 
 @NgModule({
@@ -44,6 +46,8 @@ import {
     MatTableModule,
     MatPaginatorModule,
     MatTabsModule,
+    MatExpansionModule,
+    MatCheckboxModule,
   ],
   exports: [
     LayoutModule,
@@ -66,6 +70,8 @@ import {
     MatTableModule,
     MatPaginatorModule,
     MatTabsModule,
+    MatExpansionModule,
+    MatCheckboxModule,
   ],
 })
 export class MatHelperModule { }

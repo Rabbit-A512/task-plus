@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef, MatCheckboxChange } from '@angular/material';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { DrawerDialogConfig } from 'src/app/shared/constants';
@@ -45,24 +45,25 @@ export class SubTodoCardComponent implements OnInit {
   }
 
   updateOne(): void {
-
-    const { title, description, parentId, id } = this.todo;
-
-    const dialogData = {
-      title,
-      description,
-      parentId,
-      todoId: id,
-    };
-
     const dialogRef: MatDialogRef<TodoFormComponent, ShouldUpdateData> = this.dialog.open(TodoFormComponent, {
       ...DrawerDialogConfig,
-      data: dialogData,
+      data: this.todo,
     });
 
     dialogRef.afterClosed().subscribe({
-      next: (res: ShouldUpdateData) => {
-        this.updated.emit(res);
+      next: (shouldUpdate: ShouldUpdateData) => {
+        if (shouldUpdate) {
+          this.updated.emit(shouldUpdate);
+        }
+      },
+    });
+  }
+
+  handleFinishStatusChange(event: MatCheckboxChange) {
+    const { id } = this.todo;
+    this.todoService.updateOneById(id, { isFinished: event.checked }).subscribe({
+      next: res => {
+        this.updated.emit();
       },
     });
   }

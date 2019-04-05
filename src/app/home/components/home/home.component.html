@@ -21,6 +21,9 @@
           <a class="navbar-button" mat-button routerLink="/">Task Plus</a>
         </div>
         <div class="col">
+          当前组织：<button class="navbar-button" mat-button (click)="chooseGroup()">{{ currentGroup?.name || '暂无' }}</button>
+        </div>
+        <div class="col">
           你好，<button class="navbar-button" mat-button [matMenuTriggerFor]="userMenu">{{ currentUser.nickname }}</button>
         </div>
       </div>
