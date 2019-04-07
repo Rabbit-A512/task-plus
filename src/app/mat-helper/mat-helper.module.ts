@@ -1,9 +1,13 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { NgModule } from '@angular/core';
 import {
+  MatBadgeModule,
   MatButtonModule,
   MatCardModule,
+  MatCheckboxModule,
   MatDialogModule,
+  MatExpansionModule,
+  MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
   MatInputModule,
@@ -18,8 +22,6 @@ import {
   MatTableModule,
   MatTabsModule,
   MatToolbarModule,
-  MatExpansionModule,
-  MatCheckboxModule,
 } from '@angular/material';
 
 @NgModule({
@@ -35,7 +37,6 @@ import {
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
-    MatInputModule,
     MatButtonModule,
     MatSelectModule,
     MatRadioModule,
@@ -48,6 +49,9 @@ import {
     MatTabsModule,
     MatExpansionModule,
     MatCheckboxModule,
+    MatBadgeModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   exports: [
     LayoutModule,
@@ -59,7 +63,6 @@ import {
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
-    MatInputModule,
     MatButtonModule,
     MatSelectModule,
     MatRadioModule,
@@ -72,6 +75,9 @@ import {
     MatTabsModule,
     MatExpansionModule,
     MatCheckboxModule,
+    MatBadgeModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
 })
 export class MatHelperModule { }

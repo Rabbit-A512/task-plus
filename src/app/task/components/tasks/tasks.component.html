@@ -2,6 +2,41 @@
   我的工作任务
 </h1>
 
-<div>
+<!-- <button mat-button color="primary" (click)="chooseCurrentGroup()">
+  当前组织：{{ currentGroup.name }}
+</button> -->
 
+<h2 class="mat-h2">
+  未分配的任务
+</h2>
+
+<mat-toolbar>
+  <button mat-button (click)="createTask()" color="primary">新增任务</button>
+  <button mat-button (click)="chooseCurrentGroup()" color="primary">切换组织</button>
+</mat-toolbar>
+
+<app-tasks-table
+  [tasks]="undistributedTasks"
+  (deletedOne)="loadAll()"
+  (updatedOne)="loadAll()"
+></app-tasks-table>
+
+<mat-form-field>
+  <mat-select
+    placeholder="经办人"
+    [formControl]="participatorsControl"
+    multiple
+    (selectionChange)="handleParticipatorsChange($event)"
+  >
+    <mat-option *ngFor="let participator of participators" [value]="participator.id">{{ participator.nickname }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div>
+  <app-user-tasks
+    *ngFor="let user of participators"
+    [user]="user"
+    (deleted)="loadAll()"
+    (updated)="loadAll()"
+  ></app-user-tasks>
 </div>

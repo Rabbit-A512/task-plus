@@ -24,6 +24,7 @@
       *matRowDef="let row; columns: participatedGroupsColumnsToDisplay"
       (dblclick)="handleChooseGroup(row)"
       class="row"
+      [class.current]="row.id == currentGroup?.id"
     ></tr>
   </table>
 </div>

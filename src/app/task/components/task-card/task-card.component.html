@@ -1,0 +1,28 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-checkbox
+        class="title"
+        [class.text-finished]="task.isFinished"
+        [checked]="task.isFinished"
+        (change)="handleFinishStatusChange($event)"
+      >
+        {{ task.title }}
+      </mat-checkbox>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p class="description">{{ task.description }}</p>
+  </mat-card-content>
+  <mat-card-actions class="actions">
+    <button mat-button color="primary" (click)="updateOne()">
+      <mat-icon>edit</mat-icon>编辑
+    </button>
+    <button mat-button color="warn" (click)="deleteOne()">
+      <mat-icon>delete</mat-icon>删除
+    </button>
+  </mat-card-actions>
+  <mat-card-footer class="footer">
+    创建时间：{{ task.createdAt | date: 'medium' }}
+  </mat-card-footer>
+</mat-card>

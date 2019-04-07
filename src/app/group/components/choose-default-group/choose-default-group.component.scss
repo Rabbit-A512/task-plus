@@ -1,3 +1,8 @@
+@import '~@angular/material/theming';
+
+$primary: mat-palette($mat-indigo);
+$accent: mat-palette($mat-pink);
+
 .dialog {
   min-width: 400px;
 }
@@ -8,4 +13,8 @@ table {
 
 .row:hover {
   cursor: pointer;
+}
+
+.current {
+  background-color: mat-color($accent, 0.1);
 }

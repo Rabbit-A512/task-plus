@@ -1,0 +1,22 @@
+.card {
+  width: 100%;
+
+  .title {
+    font-size: x-large;
+  }
+
+  .description {
+    font-size: large;
+  }
+
+  .footer {
+    padding-left: 15px;
+    padding-bottom: 15px;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    font-size: small;
+  }
+}

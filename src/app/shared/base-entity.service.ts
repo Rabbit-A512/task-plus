@@ -1,10 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { URLConstants } from './constants';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-import { IEntityService, EntityId } from './interfaces/entity-service.interface';
-import { map, catchError } from 'rxjs/operators';
+import { URLConstants } from './constants';
 import { handleServiceError } from './errors/app-error-handler';
+import { EntityId, IEntityService } from './interfaces/entity-service.interface';
 import { IResponseArray } from './interfaces/response-array.interface';
 import { ISimpleQueryParams } from './interfaces/simple-query-params.interface';
 
@@ -30,8 +30,7 @@ export class BaseEntityService<TEntity, TCreateDto, TUpdateDto> implements IEnti
 
   findOneById(id: EntityId): Observable<TEntity> {
     const url = `${this.domainUrl}/${id}`;
-    return this.http.get(url).pipe(
-      map(v => v as TEntity),
+    return this.http.get<TEntity>(url).pipe(
       catchError(handleServiceError),
     );
   }
@@ -39,39 +38,32 @@ export class BaseEntityService<TEntity, TCreateDto, TUpdateDto> implements IEnti
   findAll(skip?: number, take?: number) {
     const url = this.domainUrl;
     const options = BaseEntityService.makePaginationOptions(skip, take);
-    return this.http.get(url, options).pipe(
-      map(arr => arr as IResponseArray<TEntity>),
-    );
+    return this.http.get<IResponseArray<TEntity>>(url, options);
   }
 
   findManyByCondition(condition: object, skip?: number, take?: number) {
     const url = `${this.domainUrl}/condition`;
     const options = BaseEntityService.makePaginationOptions(skip, take);
-    return this.http.post(url, condition, options).pipe(
-      map(arr => arr as IResponseArray<TEntity>),
-    );
+    return this.http.post<IResponseArray<TEntity>>(url, condition, options);
   }
 
   createOne(createDto: TCreateDto): Observable<TEntity> {
     const url = this.domainUrl;
-    return this.http.post(url, createDto).pipe(
-      map(v => v as TEntity),
+    return this.http.post<TEntity>(url, createDto).pipe(
       catchError(handleServiceError),
     );
   }
 
   updateOneById(id: EntityId, updateDto: Partial<TUpdateDto>): Observable<TEntity> {
     const url = `${this.domainUrl}/${id}`;
-    return this.http.put(url, updateDto).pipe(
-      map(v => v as TEntity),
+    return this.http.put<TEntity>(url, updateDto).pipe(
       catchError(handleServiceError),
     );
   }
 
   deleteOneById(id: EntityId): Observable<TEntity> {
     const url = `${this.domainUrl}/${id}`;
-    return this.http.delete(url).pipe(
-      map(v => v as TEntity),
+    return this.http.delete<TEntity>(url).pipe(
       catchError(handleServiceError),
     );
   }

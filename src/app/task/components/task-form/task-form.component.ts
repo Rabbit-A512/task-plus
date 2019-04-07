@@ -5,6 +5,8 @@ import * as _ from 'lodash';
 
 import { TaskPriority } from '../../task.entity';
 import { TaskService } from '../../task.service';
+import { GroupService } from './../../../group/group.service';
+import { User } from './../../../user/user.entity';
 import { TaskDialogData } from './../../utils/custom-types';
 
 @Component({
@@ -14,6 +16,7 @@ import { TaskDialogData } from './../../utils/custom-types';
 })
 export class TaskFormComponent implements OnInit {
   taskForm: FormGroup;
+  participators: User[];
 
   private _isCreating: boolean;
 
@@ -22,6 +25,7 @@ export class TaskFormComponent implements OnInit {
     private readonly dialogRef: MatDialogRef<TaskFormComponent, ShouldUpdateData>,
     private readonly taskService: TaskService,
     private readonly snackBar: MatSnackBar,
+    private readonly groupService: GroupService,
     @Inject(MAT_DIALOG_DATA) private taskDialogData: TaskDialogData,
   ) { }
 
@@ -31,6 +35,7 @@ export class TaskFormComponent implements OnInit {
       title,
       description,
       priority,
+      userId,
       planToFinishAt,
       actuallyFinishedAt,
     } = this.taskDialogData;
@@ -41,8 +46,21 @@ export class TaskFormComponent implements OnInit {
       title: [title || '', [Validators.required]],
       description: [description || ''],
       priority: [priority || TaskPriority.LOW, [Validators.required]],
+      userId: [userId || null],
       // planToFinishAt: [planToFinishAt || new Date().toISOString()],
       // actuallyFinishedAt: [actuallyFinishedAt || ''],
+    });
+
+    this.loadParticipators();
+
+  }
+
+  loadParticipators(): void {
+    const currentGroupId = this.groupService.currentGroup.id;
+    this.groupService.findParticipatorsByGroupId(currentGroupId).subscribe({
+      next: res => {
+        this.participators = res.data;
+      },
     });
   }
 
@@ -50,13 +68,16 @@ export class TaskFormComponent implements OnInit {
     if (this.taskForm.invalid) {
       return;
     }
+    console.log(this.taskForm.value);
+
+    const { id: groupId } = this.groupService.currentGroup;
 
     const {
       id,
       parentId,
     } = this.taskDialogData;
 
-    const reqBody = this.isCreating ? _.assign(this.taskForm.value, { parentId }) : this.taskForm.value;
+    const reqBody = this.isCreating ? _.assign(this.taskForm.value, { parentId, groupId }) : this.taskForm.value;
     const req$ = this.isCreating ? this.taskService.createOne(reqBody) : this.taskService.updateOneById(id, reqBody);
 
     req$.subscribe({

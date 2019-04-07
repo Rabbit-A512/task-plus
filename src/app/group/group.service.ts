@@ -1,18 +1,19 @@
-import { UserService } from './../user/user.service';
-import { Unauthorized } from './../shared/errors/unauthorized';
-import { AuthService } from './../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, of, Subject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
+import { EntityId } from '../shared/interfaces/entity-service.interface';
+import { IResponseArray } from '../shared/interfaces/response-array.interface';
+import { User } from '../user/user.entity';
+import { AuthService } from './../auth/auth.service';
 import { BaseEntityService } from './../shared/base-entity.service';
+import { Unauthorized } from './../shared/errors/unauthorized';
 import { UpdateTodoDto } from './../todo/dto/update-todo.dto';
+import { UserService } from './../user/user.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { Group } from './group.entity';
-import { EntityId } from '../shared/interfaces/entity-service.interface';
-import { Observable, of } from 'rxjs';
-import { IResponseArray } from '../shared/interfaces/response-array.interface';
-import { map, switchMap } from 'rxjs/operators';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,8 @@ import { Router } from '@angular/router';
 export class GroupService extends BaseEntityService<Group, CreateGroupDto, UpdateTodoDto> {
 
   private _currentGroup: Group;
+
+  public currentGroupId = new Subject<number>();
 
   constructor(
     protected readonly http: HttpClient,
@@ -36,7 +39,7 @@ export class GroupService extends BaseEntityService<Group, CreateGroupDto, Updat
       const currentUser = this.authService.currentUser;
       const { id: userId } = currentUser;
 
-      const req$ = this.userService.findOneById(userId).pipe(
+      const req$ = this.userService.findOneById(userId).pipe<Group>(
         switchMap(user => {
           if (user.defaultGroupId) {
             return this.findOneById(user.defaultGroupId);
@@ -49,6 +52,7 @@ export class GroupService extends BaseEntityService<Group, CreateGroupDto, Updat
       req$.subscribe({
         next: group => {
           this._currentGroup = group;
+          this.currentGroupId.next(group.id);
         }
       });
 
@@ -62,17 +66,25 @@ export class GroupService extends BaseEntityService<Group, CreateGroupDto, Updat
   findOwnedGroupsByUserId(userId: EntityId, skip?: number, take?: number): Observable<IResponseArray<Group>> {
     const url = `${this.domainUrl}/owned/${userId}`;
     const options = BaseEntityService.makePaginationOptions(skip, take);
-    return this.http.get(url, options).pipe(
-      map(res => res as IResponseArray<Group>),
-    );
+    return this.http.get<IResponseArray<Group>>(url, options);
   }
 
   findParticipatedGroupsByUserId(userId: EntityId, skip?: number, take?: number): Observable<IResponseArray<Group>> {
     const url = `${this.domainUrl}/participated/${userId}`;
     const options = BaseEntityService.makePaginationOptions(skip, take);
-    return this.http.get(url, options).pipe(
-      map(res => res as IResponseArray<Group>),
-    );
+    return this.http.get<IResponseArray<Group>>(url, options);
+  }
+
+  findOwnersByGroupId(groupId: EntityId, skip?: number, take?: number): Observable<IResponseArray<User>> {
+    const url = `${this.domainUrl}/${groupId}/owners`;
+    const options = BaseEntityService.makePaginationOptions(skip, take);
+    return this.http.get<IResponseArray<User>>(url, options);
+  }
+
+  findParticipatorsByGroupId(groupId: EntityId, skip?: number, take?: number): Observable<IResponseArray<User>> {
+    const url = `${this.domainUrl}/${groupId}/participators`;
+    const options = BaseEntityService.makePaginationOptions(skip, take);
+    return this.http.get<IResponseArray<User>>(url, options);
   }
 
   get currentGroup() {

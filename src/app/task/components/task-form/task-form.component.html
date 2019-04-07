@@ -21,12 +21,23 @@
       ></textarea>
     </mat-form-field>
     <mat-form-field>
-      <mat-radio-group formControlName="priority">
-        <!-- TODO: 使用常量设置value值 -->
+      <!-- <mat-label>优先级</mat-label> -->
+      <!-- <mat-radio-group formControlName="priority">
         <mat-radio-button value="0">低</mat-radio-button>
         <mat-radio-button value="1">中</mat-radio-button>
         <mat-radio-button value="2">高</mat-radio-button>
-      </mat-radio-group>
+      </mat-radio-group> -->
+      <mat-select placeholder="优先级" formControlName="priority">
+        <mat-option [value]="0">低</mat-option>
+        <mat-option [value]="1">中</mat-option>
+        <mat-option [value]="2">高</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="经办人" formControlName="userId">
+        <mat-option [value]="null">无</mat-option>
+        <mat-option *ngFor="let user of participators" [value]="user.id">{{ user.nickname }}</mat-option>
+      </mat-select>
     </mat-form-field>
     <!-- <mat-form-field>
       <mat-label>开始时间</mat-label>

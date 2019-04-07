@@ -59,4 +59,8 @@ export class ChooseDefaultGroupComponent implements OnInit {
     this.dialogRef.close(false);
   }
 
+  get currentGroup() {
+    return this.groupService.currentGroup;
+  }
+
 }

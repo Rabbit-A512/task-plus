@@ -1,8 +1,9 @@
 import { Todo } from '../todo/todo.entity';
 import { Group } from './../group/group.entity';
+import { Task } from '../task/task.entity';
 
 export class User {
-  id: string; // 因为是bigint，取出来JSON表示为string
+  id: number;
 
   username: string;
 
@@ -14,9 +15,11 @@ export class User {
 
   todos: Todo[];
 
+  tasks: Task[];
+
   isDeleted: boolean;
 
   defaultGroupId?: number;
 
-  defaultGroup?: Group;
+  // defaultGroup?: Group;
 }
